@@ -43,5 +43,5 @@ A modern, sleek **Android Weather App** built with **Jetpack Compose** and power
 ---
 
 🎨 Screenshots
-<img src="screenshots/home.png" alt="Home Screen" width="300"/>
+<img src="Screenshots/Main_UI.png" alt="Main Screen" width="300"/>
 
