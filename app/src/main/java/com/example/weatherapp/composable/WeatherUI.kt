@@ -120,17 +120,14 @@ fun WeatherUI(viewModel: WeatherViewModel) {
             .onSizeChanged { size = it.toSize() }
             .background(getAnimatedBackground(description = weatherCondition, size))
 
-    ) {
+    ) { //Swipe Refresh
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing.value),
             onRefresh = {
                 isRefreshing.value = true
 
-                // 🔄 Trigger your API call
                 viewModel.getData(cityName.ifEmpty { "" })  // default fallback city
 
-                // ✅ You can wait for network to complete then stop refreshing
-                // but here we just delay for UI feedback
                 coroutineScope.launch {
                     delay(1500) // simulate loading
                     isRefreshing.value = false
@@ -227,11 +224,12 @@ fun WeatherUI(viewModel: WeatherViewModel) {
                                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                                         keyboardActions = KeyboardActions(
                                             onSearch = {
-                                                viewModel.getData(cityName)
+                                                showContent = true
                                                 keyBoardController?.hide()
                                                 isLoading = true
                                                 isExpanded = false
                                                 viewModel.onSearchQueryChanged("")
+                                                viewModel.getData(cityName)
                                             }
                                         ),
                                     )
@@ -269,7 +267,8 @@ fun WeatherUI(viewModel: WeatherViewModel) {
 
                         }
 
-                    }
+                    }//Search box
+
                     if (isExpanded && viewModel.suggestions.isNotEmpty()) {
                         AnimatedVisibility(
                             visible = isExpanded,
@@ -315,7 +314,7 @@ fun WeatherUI(viewModel: WeatherViewModel) {
                                     }
 
                                 }
-                            }
+                            }//Recommendation column
                         }
                     }
                 }
@@ -362,7 +361,7 @@ fun WeatherUI(viewModel: WeatherViewModel) {
                                     }
 
                                     null -> {}
-                                }
+                                } //main Content
                             }
                         }
                     }
